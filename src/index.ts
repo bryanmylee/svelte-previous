@@ -1,4 +1,5 @@
-import { writable, derived, Writable, Readable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
+import type { Writable, Readable } from 'svelte/store';
 
 type NonNullFirstArray<T> = [T, ...(T|null)[]];
 type Updater<T> = (toUpdate: T) => T;
@@ -12,16 +13,15 @@ export function withPrevious<T>(initValue: T, numToTrack: number = 2):
   // initValue and all other elements set to null.
   const init: NonNullFirstArray<T>
       = [initValue, ...Array(numToTrack - 1).fill(null)];
-  console.log(init);
   const values = writable<NonNullFirstArray<T>>(init);
   const updateCurrent = (fn: Updater<T>) => {
-    values.update(old => {
-      const newValue = fn(old[0]);
+    values.update($values => {
+      const newValue = fn($values[0]);
       // Adds the new value to the front of the array and removes the oldest
       // value from the end.
       return [
         newValue,
-        ...old.slice(0, numToTrack - 1),
+        ...$values.slice(0, numToTrack - 1),
       ];
     });
   }
@@ -33,9 +33,8 @@ export function withPrevious<T>(initValue: T, numToTrack: number = 2):
     },
   };
   // Create an array of derived stores for every other element in the array.
-  const others = Array(numToTrack - 1).map((_, i) => {
-    return derived(values, $values => $values[i + 1]);
-  });
+  const others = [...Array(numToTrack - 1)]
+      .map((_, i) => derived(values, $values => $values[i + 1]));
   return [current, ...others];
 }
 
