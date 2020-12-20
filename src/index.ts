@@ -38,10 +38,10 @@ export function withPrevious<T>(initValue: T, {
       ];
     });
   }
-  const current: Writable<T> = {
+  const current = {
     subscribe: derived(values, $values => $values[0]).subscribe,
     update: updateCurrent,
-    set: (newValue) => {
+    set: (newValue: T) => {
       updateCurrent(() => newValue);
     },
   };
