@@ -3,6 +3,7 @@ import type { Writable, Readable } from 'svelte/store';
 
 interface WithPreviousOptions<T> {
   numToTrack?: number;
+  requireChange?: boolean;
   isEqual?: IsEqual<T>;
 }
 type IsEqual<T> = (a: T, b: T) => boolean;
@@ -11,8 +12,9 @@ type Updater<T> = (toUpdate: T) => T;
 
 export function withPrevious<T>(initValue: T, {
   numToTrack = 2,
+  requireChange = true,
   isEqual = (a, b) => a === b,
-}: WithPreviousOptions<T> = {}): [Writable<T>, ...Readable<T|null>[]] {
+}: Partial<WithPreviousOptions<T>> = {}): [Writable<T>, ...Readable<T|null>[]] {
 
   if (numToTrack < 1) {
     throw new Error('Must track at least 1 previous');
@@ -27,7 +29,7 @@ export function withPrevious<T>(initValue: T, {
       const newValue = fn($values[0]);
       // Prevent updates if values are equal as defined by an isEqual
       // comparison. By default, use a simple === comparison.
-      if (isEqual(newValue, $values[0])) {
+      if (requireChange && isEqual(newValue, $values[0])) {
         return $values;
       }
       // Adds the new value to the front of the array and removes the oldest
