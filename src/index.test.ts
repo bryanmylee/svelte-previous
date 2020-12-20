@@ -26,7 +26,7 @@ test('set one value', () => {
 
 test('init three values', () => {
   // Arrange
-  const [current, prev1, prev2] = withPrevious(0, 2);
+  const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
 
   // Assert
   expect(get(current)).toBe(0);
@@ -36,7 +36,7 @@ test('init three values', () => {
 
 test('set two values', () => {
   // Arrange
-  const [current, prev1, prev2] = withPrevious(0, 2);
+  const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
 
   // Act and Assert
   current.set(1);
@@ -56,6 +56,7 @@ test('set two values', () => {
 });
 
 test('init invalid no values', () => {
-  expect(withPrevious.bind(this, 0, 0)).toThrow('Must track at least 1 previous');
+  expect(withPrevious.bind(this, 0, { numToTrack: 0 }))
+      .toThrow('Must track at least 1 previous');
 });
 

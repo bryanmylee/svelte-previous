@@ -1,19 +1,27 @@
 import { writable, derived } from 'svelte/store';
 import type { Writable, Readable } from 'svelte/store';
 
+interface WithPreviousOptions<T> {
+  numToTrack?: number;
+  comparator?: Comparator<T>;
+}
+type Comparator<T> = (a: T, b: T) => boolean;
 type NonNullFirstArray<T> = [T, ...(T|null)[]];
 type Updater<T> = (toUpdate: T) => T;
 
-export function withPrevious<T>(initValue: T, numToTrack: number = 1):
-    [Writable<T>, ...Readable<T|null>[]] {
+export function withPrevious<T>(initValue: T, {
+  numToTrack = 2,
+  comparator = (a, b) => true
+}: WithPreviousOptions<T> = {}): [Writable<T>, ...Readable<T|null>[]] {
+
   if (numToTrack < 1) {
     throw new Error('Must track at least 1 previous');
   }
+
   // Generates an array of size numToTrack with the first element set to
   // initValue and all other elements set to null.
-  const init: NonNullFirstArray<T>
-      = [initValue, ...Array(numToTrack).fill(null)];
-  const values = writable<NonNullFirstArray<T>>(init);
+  const rest = Array(numToTrack).fill(null);
+  const values = writable<NonNullFirstArray<T>>([initValue, ...rest]);
   const updateCurrent = (fn: Updater<T>) => {
     values.update($values => {
       const newValue = fn($values[0]);
