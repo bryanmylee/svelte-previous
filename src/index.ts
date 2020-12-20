@@ -3,15 +3,17 @@ import type { Writable, Readable } from 'svelte/store';
 
 interface WithPreviousOptions<T> {
   numToTrack?: number;
-  comparator?: Comparator<T>;
+  isEqual?: IsEqual<T>;
 }
-type Comparator<T> = (a: T, b: T) => boolean;
+type IsEqual<T> = (a: T, b: T) => boolean;
 type NonNullFirstArray<T> = [T, ...(T|null)[]];
 type Updater<T> = (toUpdate: T) => T;
 
+const alwaysUpdate = <T>(a: T, b: T): boolean => false;
+
 export function withPrevious<T>(initValue: T, {
   numToTrack = 2,
-  comparator = (a, b) => true
+  isEqual = alwaysUpdate,
 }: WithPreviousOptions<T> = {}): [Writable<T>, ...Readable<T|null>[]] {
 
   if (numToTrack < 1) {
@@ -25,6 +27,11 @@ export function withPrevious<T>(initValue: T, {
   const updateCurrent = (fn: Updater<T>) => {
     values.update($values => {
       const newValue = fn($values[0]);
+      // Prevent updates if values are equal as defined by an isEqual
+      // comparison. By default, always update.
+      if (isEqual(newValue, $values[0])) {
+        return $values;
+      }
       // Adds the new value to the front of the array and removes the oldest
       // value from the end.
       return [
