@@ -1,7 +1,7 @@
 {
-  "name": "with-previous",
+  "name": "svelte-previous",
   "version": "1.0.0",
-  "description": "A Svelte store that remembers the previous value ",
+  "description": "A Svelte store that remembers the previous value",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/bryanmylee/with-previous.git"
+    "url": "git+ssh://git@github.com/bryanmylee/svelte-previous.git"
   },
   "keywords": [
     "svelte",
@@ -23,9 +23,9 @@
   "author": "Bryan Lee",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bryanmylee/with-previous/issues"
+    "url": "https://github.com/bryanmylee/svelte-previous/issues"
   },
-  "homepage": "https://github.com/bryanmylee/with-previous#readme",
+  "homepage": "https://github.com/bryanmylee/svelte-previous#readme",
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.1.0",
