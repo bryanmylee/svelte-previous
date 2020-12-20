@@ -4,15 +4,15 @@ import type { Writable, Readable } from 'svelte/store';
 type NonNullFirstArray<T> = [T, ...(T|null)[]];
 type Updater<T> = (toUpdate: T) => T;
 
-export function withPrevious<T>(initValue: T, numToTrack: number = 2):
+export function withPrevious<T>(initValue: T, numToTrack: number = 1):
     [Writable<T>, ...Readable<T|null>[]] {
-  if (numToTrack < 2) {
-    throw new Error('Must track a minimum of 2 versions');
+  if (numToTrack < 1) {
+    throw new Error('Must track at least 1 previous');
   }
   // Generates an array of size numToTrack with the first element set to
   // initValue and all other elements set to null.
   const init: NonNullFirstArray<T>
-      = [initValue, ...Array(numToTrack - 1).fill(null)];
+      = [initValue, ...Array(numToTrack).fill(null)];
   const values = writable<NonNullFirstArray<T>>(init);
   const updateCurrent = (fn: Updater<T>) => {
     values.update($values => {
@@ -21,7 +21,7 @@ export function withPrevious<T>(initValue: T, numToTrack: number = 2):
       // value from the end.
       return [
         newValue,
-        ...$values.slice(0, numToTrack - 1),
+        ...$values.slice(0, numToTrack),
       ];
     });
   }
@@ -33,7 +33,7 @@ export function withPrevious<T>(initValue: T, numToTrack: number = 2):
     },
   };
   // Create an array of derived stores for every other element in the array.
-  const others = [...Array(numToTrack - 1)]
+  const others = [...Array(numToTrack)]
       .map((_, i) => derived(values, $values => $values[i + 1]));
   return [current, ...others];
 }

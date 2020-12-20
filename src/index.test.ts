@@ -26,7 +26,7 @@ test('set one value', () => {
 
 test('init three values', () => {
   // Arrange
-  const [current, prev1, prev2] = withPrevious(0, 3);
+  const [current, prev1, prev2] = withPrevious(0, 2);
 
   // Assert
   expect(get(current)).toBe(0);
@@ -36,7 +36,7 @@ test('init three values', () => {
 
 test('set two values', () => {
   // Arrange
-  const [current, prev1, prev2] = withPrevious(0, 3);
+  const [current, prev1, prev2] = withPrevious(0, 2);
 
   // Act and Assert
   current.set(1);

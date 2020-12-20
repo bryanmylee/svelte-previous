@@ -1,7 +1,7 @@
 {
   "name": "svelte-previous",
   "version": "1.0.0",
-  "description": "A Svelte store that remembers the previous value",
+  "description": "Svelte stores that remember previous values",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
