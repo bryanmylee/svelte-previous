@@ -1,4 +1,12 @@
+![svelte-previous-banner](https://user-images.githubusercontent.com/42545742/102722925-877c4100-433f-11eb-9e67-638bf2c11f7c.png)
+
 # svelte-previous
+
+[![npm version](http://img.shields.io/npm/v/svelte-previous.svg)](https://www.npmjs.com/package/svelte-previous)
+[![npm downloads](https://img.shields.io/npm/dm/svelte-previous.svg)](https://www.npmjs.com/package/svelte-previous)
+![license](https://img.shields.io/npm/l/svelte-previous)
+![build](https://img.shields.io/github/workflow/status/bryanmylee/svelte-previous/publish)
+![size](https://img.shields.io/bundlephobia/min/svelte-previous)
 
 Svelte stores that remember previous values!
 
