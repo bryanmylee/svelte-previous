@@ -14,11 +14,44 @@ test('set one value', () => {
   // Arrange
   const [current, previous] = withPrevious(0);
 
-  // Act
+  // Act and Assert
   current.set(1);
-
-  // Assert
   expect(get(current)).toBe(1);
   expect(get(previous)).toBe(0);
+
+  current.set(2);
+  expect(get(current)).toBe(2);
+  expect(get(previous)).toBe(1);
+});
+
+test('init three values', () => {
+  // Arrange
+  const [current, prev1, prev2] = withPrevious(0, 3);
+
+  // Assert
+  expect(get(current)).toBe(0);
+  expect(get(prev1)).toBeNull();
+  expect(get(prev2)).toBeNull();
+});
+
+test('set two values', () => {
+  // Arrange
+  const [current, prev1, prev2] = withPrevious(0, 3);
+
+  // Act and Assert
+  current.set(1);
+  expect(get(current)).toBe(1);
+  expect(get(prev1)).toBe(0);
+  expect(get(prev2)).toBeNull();
+
+  current.set(2);
+  expect(get(current)).toBe(2);
+  expect(get(prev1)).toBe(1);
+  expect(get(prev2)).toBe(0);
+
+  current.set(3);
+  expect(get(current)).toBe(3);
+  expect(get(prev1)).toBe(2);
+  expect(get(prev2)).toBe(1);
 });
 
