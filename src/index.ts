@@ -9,11 +9,9 @@ type IsEqual<T> = (a: T, b: T) => boolean;
 type NonNullFirstArray<T> = [T, ...(T|null)[]];
 type Updater<T> = (toUpdate: T) => T;
 
-const alwaysUpdate = <T>(a: T, b: T): boolean => false;
-
 export function withPrevious<T>(initValue: T, {
   numToTrack = 2,
-  isEqual = alwaysUpdate,
+  isEqual = (a, b) => a === b,
 }: WithPreviousOptions<T> = {}): [Writable<T>, ...Readable<T|null>[]] {
 
   if (numToTrack < 1) {
@@ -28,7 +26,7 @@ export function withPrevious<T>(initValue: T, {
     values.update($values => {
       const newValue = fn($values[0]);
       // Prevent updates if values are equal as defined by an isEqual
-      // comparison. By default, always update.
+      // comparison. By default, use a simple === comparison.
       if (isEqual(newValue, $values[0])) {
         return $values;
       }
