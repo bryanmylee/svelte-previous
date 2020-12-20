@@ -1,4 +1,4 @@
-![svelte-previous-banner](https://user-images.githubusercontent.com/42545742/102722925-877c4100-433f-11eb-9e67-638bf2c11f7c.png)
+![svelte-previous-banner](https://user-images.githubusercontent.com/42545742/102723346-20ac5700-4342-11eb-978d-222a2f4109d5.png)
 
 # svelte-previous
 
