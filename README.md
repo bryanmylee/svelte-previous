@@ -12,6 +12,10 @@ $ npm i -D svelte-previous
 
 Since Svelte automatically bundles all required dependencies, you only need to install this package as a dev dependency with the -D flag.
 
+## Demo
+
+Visit the [REPL demo](https://svelte.dev/repl/1d3e752c51b848e6af264f3244f3e85c?version=3.31.0).
+
 ## Usage
 
 `withPrevious` accepts an initial value, and returns a tuple comprising a [Writable](https://svelte.dev/tutorial/writable-stores) and a [Readable](https://svelte.dev/tutorial/readable-stores) store.
