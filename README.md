@@ -28,16 +28,60 @@ Since Svelte automatically bundles all required dependencies, you only need to i
 from {$previous} to {$current}.
 ```
 
-### Multiple previous values
+## Options
 
-To track more than one value, pass the number of previous values to track as the second argument to `withPrevious`.
+`withPrevious` takes an options object as its second argument.
+
+### `numToTrack: number`
+
+By default, `withPrevious` tracks one previous value.
+
+To track more than one value, set `numToTrack`.
 
 ```svelte
 <script>
-  const [current, prev1, prev2] = withPrevious(0, 2);
+  const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
   setInterval(() => $current++, 1000);
 </script>
 
 from {$prev2} to {$prev1} to {$current}.
+```
+
+### `requireChange: boolean`
+
+Due to how reactivity is handled in Svelte, some assignments may assign the same value multiple times to a variable. Therefore, to prevent a single value from overwriting all previous values, a change in value is required before the current and previous values are updated.
+
+Set `requireChange = false` to change this behaviour.
+
+```svelte
+<script>
+  const [current, previous] = withPrevious(0, { requireChange: false });
+</script>
+```
+
+### `isEqual: (a: T, b: T) => boolean`
+
+By default, equality is determined with the `===` operator. However, `===` only checks equality by reference when comparing objects.
+
+Provide a custom `isEqual` function to compare objects.
+
+```svelte
+<script>
+  const [current, previous] = withPrevious(0, {
+    isEqual: (a, b) => a.name === b.name && a.age === b.age,
+  });
+</script>
+```
+
+It is also possible to use [lodash.isequal](https://www.npmjs.com/package/lodash.isequal).
+
+```svelte
+<script>
+  import isEqual from 'lodash.isequal';
+
+  const [current, previous] = withPrevious(0, {
+    isEqual: isEqual,
+  });
+</script>
 ```
 
