@@ -1,27 +1,24 @@
+import { get } from 'svelte/store';
 import { withPrevious } from './index';
 
 test('init', () => {
   // Arrange
-  const value = withPrevious(0);
+  const [current, previous] = withPrevious(0);
 
   // Assert
-  value.subscribe(v => {
-    expect(v.current).toEqual(0);
-    expect(v.previous).toBeNull();
-  })
+  expect(get(current)).toBe(0);
+  expect(get(previous)).toBeNull();
 });
 
 test('set one value', () => {
   // Arrange
-  const value = withPrevious(0);
+  const [current, previous] = withPrevious(0);
 
   // Act
-  value.setCurrent(1);
+  current.set(1);
 
   // Assert
-  value.subscribe(v => {
-    expect(v.current).toEqual(1);
-    expect(v.previous).toEqual(0);
-  })
+  expect(get(current)).toBe(1);
+  expect(get(previous)).toBe(0);
 });
 
