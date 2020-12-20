@@ -55,3 +55,7 @@ test('set two values', () => {
   expect(get(prev2)).toBe(1);
 });
 
+test('init invalid no values', () => {
+  expect(withPrevious.bind(this, 0, 0)).toThrow('Must track at least 1 previous');
+});
+
