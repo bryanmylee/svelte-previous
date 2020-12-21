@@ -31,13 +31,15 @@ Visit the [REPL demo](https://svelte.dev/repl/1d3e752c51b848e6af264f3244f3e85c?v
 ```svelte
 <script>
   import { withPrevious } from 'svelte-previous';
+  
+  export let name;
   // current is writable, while previous is read-only.
-  const [current, previous] = withPrevious(0);
+  const [currentName, previousName] = withPrevious(0);
   // To update the values, assign to the writable store.
-  setInterval(() => $current++, 1000);
+  $: $currentName = name;
 </script>
 
-from {$previous} to {$current}.
+transition from {$previousName} to {$currentName}.
 ```
 
 ## Options
@@ -53,7 +55,6 @@ To track more than one value, set `numToTrack`.
 ```svelte
 <script>
   const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
-  setInterval(() => $current++, 1000);
 </script>
 
 from {$prev2} to {$prev1} to {$current}.
