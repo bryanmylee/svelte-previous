@@ -39,7 +39,7 @@ export function withPrevious<T>(initValue: T, {
         ...$values.slice(0, numToTrack),
       ];
     });
-  }
+  };
   const current = {
     subscribe: derived(values, $values => $values[0]).subscribe,
     update: updateCurrent,

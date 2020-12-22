@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "prepare": "rollup -c && tsc",
-    "test": "jest"
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "jest --collect-coverage"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,8 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.1.0",
     "@types/jest": "^26.0.19",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
     "eslint": "^7.16.0",
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
