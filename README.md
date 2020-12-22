@@ -6,7 +6,8 @@
 [![npm downloads](https://img.shields.io/npm/dm/svelte-previous.svg)](https://www.npmjs.com/package/svelte-previous)
 ![license](https://img.shields.io/npm/l/svelte-previous)
 ![build](https://img.shields.io/github/workflow/status/bryanmylee/svelte-previous/publish)
-![size](https://img.shields.io/bundlephobia/min/svelte-previous)
+[![coverage](https://coveralls.io/repos/github/bryanmylee/svelte-previous/badge.svg?branch=master)](https://coveralls.io/github/bryanmylee/svelte-previous?branch=master)
+[![size](https://img.shields.io/bundlephobia/min/svelte-previous)](https://bundlephobia.com/result?p=svelte-previous)
 
 Svelte stores that remember previous values!
 
@@ -31,7 +32,7 @@ Visit the [REPL demo](https://svelte.dev/repl/1d3e752c51b848e6af264f3244f3e85c?v
 ```svelte
 <script>
   import { withPrevious } from 'svelte-previous';
-  
+
   export let name;
   // current is writable, while previous is read-only.
   const [currentName, previousName] = withPrevious(0);
