@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import type { Writable, Readable } from 'svelte/store';
 
-interface WithPreviousOptions<T> {
+interface UsePreviousOptions<T> {
   numToTrack?: number;
   requireChange?: boolean;
   isEqual?: IsEqual<T>;
@@ -14,7 +14,7 @@ export function usePrevious<T>(initValue: T, {
   numToTrack = 2,
   requireChange = true,
   isEqual = (a, b) => a === b,
-}: Partial<WithPreviousOptions<T>> = {}): [Writable<T>, ...Readable<T|null>[]] {
+}: Partial<UsePreviousOptions<T>> = {}): [Writable<T>, ...Readable<T|null>[]] {
 
   if (numToTrack < 1) {
     throw new Error('Must track at least 1 previous');
