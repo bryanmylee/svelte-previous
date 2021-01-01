@@ -27,15 +27,15 @@ Visit the [REPL demo](https://svelte.dev/repl/1d3e752c51b848e6af264f3244f3e85c?v
 
 ## Usage
 
-`withPrevious` accepts an initial value, and returns a tuple comprising a [Writable](https://svelte.dev/tutorial/writable-stores) and a [Readable](https://svelte.dev/tutorial/readable-stores) store.
+`usePrevious` accepts an initial value, and returns a tuple comprising a [Writable](https://svelte.dev/tutorial/writable-stores) and a [Readable](https://svelte.dev/tutorial/readable-stores) store.
 
 ```svelte
 <script>
-  import { withPrevious } from 'svelte-previous';
+  import { usePrevious } from 'svelte-previous';
 
   export let name;
   // current is writable, while previous is read-only.
-  const [currentName, previousName] = withPrevious(0);
+  const [currentName, previousName] = usePrevious(0);
   // To update the values, assign to the writable store.
   $: $currentName = name;
 </script>
@@ -45,17 +45,17 @@ transition from {$previousName} to {$currentName}.
 
 ## Options
 
-`withPrevious` takes an options object as its second argument.
+`usePrevious` takes an options object as its second argument.
 
 ### `numToTrack: number`
 
-By default, `withPrevious` tracks one previous value.
+By default, `usePrevious` tracks one previous value.
 
 To track more than one value, set `numToTrack`.
 
 ```svelte
 <script>
-  const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
+  const [current, prev1, prev2] = usePrevious(0, { numToTrack: 2 });
 </script>
 
 from {$prev2} to {$prev1} to {$current}.
@@ -69,7 +69,7 @@ Set `requireChange = false` to change this behaviour.
 
 ```svelte
 <script>
-  const [current, previous] = withPrevious(0, { requireChange: false });
+  const [current, previous] = usePrevious(0, { requireChange: false });
 </script>
 ```
 
@@ -81,7 +81,7 @@ Provide a custom `isEqual` function to compare objects.
 
 ```svelte
 <script>
-  const [current, previous] = withPrevious(0, {
+  const [current, previous] = usePrevious(0, {
     isEqual: (a, b) => a.name === b.name && a.age === b.age,
   });
 </script>
@@ -93,7 +93,7 @@ It is also possible to use [lodash.isequal](https://www.npmjs.com/package/lodash
 <script>
   import isEqual from 'lodash.isequal';
 
-  const [current, previous] = withPrevious(0, {
+  const [current, previous] = usePrevious(0, {
     isEqual: isEqual,
   });
 </script>

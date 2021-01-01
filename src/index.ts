@@ -10,7 +10,7 @@ type IsEqual<T> = (a: T, b: T) => boolean;
 type NonNullFirstArray<T> = [T, ...(T|null)[]];
 type Updater<T> = (toUpdate: T) => T;
 
-export function withPrevious<T>(initValue: T, {
+export function usePrevious<T>(initValue: T, {
   numToTrack = 2,
   requireChange = true,
   isEqual = (a, b) => a === b,
