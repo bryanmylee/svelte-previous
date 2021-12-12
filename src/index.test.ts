@@ -1,9 +1,9 @@
 import { get } from 'svelte/store';
-import { usePrevious } from './index';
+import { withPrevious } from './index';
 
 test('init', () => {
 	// Arrange
-	const [current, previous] = usePrevious(0);
+	const [current, previous] = withPrevious(0);
 
 	// Assert
 	expect(get(current)).toBe(0);
@@ -12,7 +12,7 @@ test('init', () => {
 
 test('set one previous value', () => {
 	// Arrange
-	const [current, previous] = usePrevious(0);
+	const [current, previous] = withPrevious(0);
 
 	// Act and Assert
 	current.set(1);
@@ -26,7 +26,7 @@ test('set one previous value', () => {
 
 test('init two previous values', () => {
 	// Arrange
-	const [current, prev1, prev2] = usePrevious(0, { numToTrack: 2 });
+	const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
 
 	// Assert
 	expect(get(current)).toBe(0);
@@ -36,7 +36,7 @@ test('init two previous values', () => {
 
 test('set two previous values', () => {
 	// Arrange
-	const [current, prev1, prev2] = usePrevious(0, { numToTrack: 2 });
+	const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
 
 	// Act and Assert
 	current.set(1);
@@ -56,14 +56,14 @@ test('set two previous values', () => {
 });
 
 test('init invalid no values', () => {
-	expect(usePrevious.bind(this, 0, { numToTrack: 0 })).toThrow(
+	expect(withPrevious.bind(this, 0, { numToTrack: 0 })).toThrow(
 		'Must track at least 1 previous'
 	);
 });
 
 test('update when equal', () => {
 	// Arrange
-	const [current, previous] = usePrevious(0, { requireChange: false });
+	const [current, previous] = withPrevious(0, { requireChange: false });
 
 	// Act and Assert
 	current.set(1);
@@ -74,7 +74,7 @@ test('update when equal', () => {
 
 test('no update when equal', () => {
 	// Arrange
-	const [current, previous] = usePrevious(0);
+	const [current, previous] = withPrevious(0);
 
 	// Act and Assert
 	current.set(1);
@@ -88,7 +88,7 @@ test('no update when equal object value', () => {
 	const first = { name: 'sam', age: 12 };
 	const second = { name: 'john', age: 13 };
 	const secondCopy = { name: 'john', age: 13 };
-	const [current, previous] = usePrevious(first, {
+	const [current, previous] = withPrevious(first, {
 		isEqual: (a, b) => a.name === b.name && a.age === b.age,
 	});
 
@@ -101,7 +101,7 @@ test('no update when equal object value', () => {
 
 test('update when equal object value, two previous values', () => {
 	// Arrange
-	const [current, prev1, prev2] = usePrevious(0, {
+	const [current, prev1, prev2] = withPrevious(0, {
 		numToTrack: 2,
 		requireChange: false,
 	});

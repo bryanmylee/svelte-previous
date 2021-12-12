@@ -1,6 +1,6 @@
 {
 	"name": "svelte-previous",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Svelte stores that remember previous values",
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",

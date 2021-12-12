@@ -1,22 +1,21 @@
 import { writable, derived } from 'svelte/store';
-import type { Writable, Readable } from 'svelte/store';
+import type { Writable, Readable, Updater } from 'svelte/store';
 
-interface UsePreviousOptions<T> {
+interface WithPreviousOptions<T> {
 	numToTrack?: number;
 	requireChange?: boolean;
 	isEqual?: IsEqual<T>;
 }
 type IsEqual<T> = (a: T, b: T) => boolean;
 type NonNullFirstArray<T> = [T, ...(T | null)[]];
-type Updater<T> = (toUpdate: T) => T;
 
-export function usePrevious<T>(
+export function withPrevious<T>(
 	initValue: T,
 	{
 		numToTrack = 1,
 		requireChange = true,
 		isEqual = (a, b) => a === b,
-	}: Partial<UsePreviousOptions<T>> = {}
+	}: Partial<WithPreviousOptions<T>> = {}
 ): [Writable<T>, ...Readable<T | null>[]] {
 	if (numToTrack <= 0) {
 		throw new Error('Must track at least 1 previous');
@@ -52,3 +51,8 @@ export function usePrevious<T>(
 	);
 	return [current, ...others];
 }
+
+/**
+ * @deprecated Since version 2.0.1. Use `withPrevious` instead.
+ */
+export const usePrevious = withPrevious;
