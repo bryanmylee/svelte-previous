@@ -98,4 +98,3 @@ It is also possible to use [lodash.isequal](https://www.npmjs.com/package/lodash
   });
 </script>
 ```
-
