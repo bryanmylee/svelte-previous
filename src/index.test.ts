@@ -26,6 +26,46 @@ describe('initialization', () => {
 			'Must track at least 1 previous'
 		);
 	});
+	describe('with initial previous values', () => {
+		it('initializes multiple previous values', () => {
+			// Arrange
+			const [current, prev1, prev2] = withPrevious(0, {
+				numToTrack: 2,
+				initPrevious: [1, 2],
+			});
+
+			// Assert
+			expect(get(current)).toBe(0);
+			expect(get(prev1)).toBe(1);
+			expect(get(prev2)).toBe(2);
+		});
+
+		it('initializes fewer previous values than tracked', () => {
+			// Arrange
+			const [current, prev1, prev2] = withPrevious(0, {
+				numToTrack: 2,
+				initPrevious: [1],
+			});
+
+			// Assert
+			expect(get(current)).toBe(0);
+			expect(get(prev1)).toBe(1);
+			expect(get(prev2)).toBeNull();
+		});
+
+		it('initializes more previous values than tracked', () => {
+			// Arrange
+			const [current, prev1, prev2] = withPrevious(0, {
+				numToTrack: 2,
+				initPrevious: [1, 2, 3, 4],
+			});
+
+			// Assert
+			expect(get(current)).toBe(0);
+			expect(get(prev1)).toBe(1);
+			expect(get(prev2)).toBe(2);
+		});
+	});
 });
 
 describe('update previous', () => {

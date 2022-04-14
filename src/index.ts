@@ -3,6 +3,7 @@ import type { Writable, Readable, Updater } from 'svelte/store';
 
 interface WithPreviousOptions<T> {
 	numToTrack?: number;
+	initPrevious?: T[];
 	requireChange?: boolean;
 	isEqual?: IsEqual<T>;
 }
@@ -13,6 +14,7 @@ export function withPrevious<T>(
 	initValue: T,
 	{
 		numToTrack = 1,
+		initPrevious = [],
 		requireChange = true,
 		isEqual = (a, b) => a === b,
 	}: Partial<WithPreviousOptions<T>> = {}
@@ -22,8 +24,12 @@ export function withPrevious<T>(
 	}
 
 	// Generates an array of size numToTrack with the first element set to
-	// initValue and all other elements set to null.
-	const rest = Array(numToTrack).fill(null);
+	// initValue and all other elements set to ...initPrevious or null.
+	const rest: (T | null)[] = initPrevious.slice(0, numToTrack);
+	while (rest.length < numToTrack) {
+		rest.push(null);
+	}
+
 	const values = writable<NonNullFirstArray<T>>([initValue, ...rest]);
 	const updateCurrent = (fn: Updater<T>) => {
 		values.update(($values) => {
