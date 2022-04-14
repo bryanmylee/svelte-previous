@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 import { withPrevious } from './index';
 
 describe('initialization', () => {
-	test('init default', () => {
+	it('initializes the current and previous null value', () => {
 		// Arrange
 		const [current, previous] = withPrevious(0);
 
@@ -11,7 +11,7 @@ describe('initialization', () => {
 		expect(get(previous)).toBeNull();
 	});
 
-	test('init two previous values', () => {
+	it('initializes the current and two previous null values', () => {
 		// Arrange
 		const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
 
@@ -21,7 +21,7 @@ describe('initialization', () => {
 		expect(get(prev2)).toBeNull();
 	});
 
-	test('init invalid no values', () => {
+	it('throws an error if no values are tracked', () => {
 		expect(withPrevious.bind(this, 0, { numToTrack: 0 })).toThrow(
 			'Must track at least 1 previous'
 		);
@@ -29,7 +29,7 @@ describe('initialization', () => {
 });
 
 describe('update previous', () => {
-	test('set one previous value', () => {
+	it('sets one previous value', () => {
 		// Arrange
 		const [current, previous] = withPrevious(0);
 
@@ -43,7 +43,7 @@ describe('update previous', () => {
 		expect(get(previous)).toBe(1);
 	});
 
-	test('set two previous values', () => {
+	it('sets two previous values', () => {
 		// Arrange
 		const [current, prev1, prev2] = withPrevious(0, { numToTrack: 2 });
 
@@ -66,7 +66,7 @@ describe('update previous', () => {
 });
 
 describe('equality', () => {
-	test('update when equal', () => {
+	it('updates even if the values are equal', () => {
 		// Arrange
 		const [current, previous] = withPrevious(0, { requireChange: false });
 
@@ -77,7 +77,22 @@ describe('equality', () => {
 		expect(get(previous)).toBe(1);
 	});
 
-	test('no update when equal', () => {
+	it('updates multiple previous values even if the values are equal', () => {
+		// Arrange
+		const [current, prev1, prev2] = withPrevious(0, {
+			numToTrack: 2,
+			requireChange: false,
+		});
+
+		// Act and Assert
+		current.set(0);
+		current.set(0);
+		expect(get(current)).toBe(0);
+		expect(get(prev1)).toBe(0);
+		expect(get(prev2)).toBe(0);
+	});
+
+	it('does not update if the values are equal', () => {
 		// Arrange
 		const [current, previous] = withPrevious(0);
 
@@ -88,7 +103,7 @@ describe('equality', () => {
 		expect(get(previous)).toBe(0);
 	});
 
-	test('no update when equal object value', () => {
+	it('does not update if object values are equal based on `isEqual`', () => {
 		// Arrange
 		const first = { name: 'sam', age: 12 };
 		const second = { name: 'john', age: 13 };
@@ -102,20 +117,5 @@ describe('equality', () => {
 		current.set(secondCopy);
 		expect(get(current)).toBe(second);
 		expect(get(previous)).toBe(first);
-	});
-
-	test('update when equal object value, two previous values', () => {
-		// Arrange
-		const [current, prev1, prev2] = withPrevious(0, {
-			numToTrack: 2,
-			requireChange: false,
-		});
-
-		// Act and Assert
-		current.set(0);
-		current.set(0);
-		expect(get(current)).toBe(0);
-		expect(get(prev1)).toBe(0);
-		expect(get(prev2)).toBe(0);
 	});
 });
