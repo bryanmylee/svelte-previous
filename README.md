@@ -93,7 +93,7 @@ Provide a custom `isEqual` function to compare objects.
 
 ```ts
 const [current, previous] = withPrevious(0, {
-	isEqual: (a, b) => a.name === b.name && a.age === b.age,
+  isEqual: (a, b) => a.name === b.name && a.age === b.age,
 });
 ```
 
@@ -103,6 +103,6 @@ It is also possible to use [lodash.isequal](https://www.npmjs.com/package/lodash
 import isEqual from 'lodash.isequal';
 
 const [current, previous] = withPrevious(0, {
-	isEqual: isEqual,
+  isEqual: isEqual,
 });
 ```
