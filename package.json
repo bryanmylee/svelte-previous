@@ -1,6 +1,6 @@
 {
 	"name": "svelte-previous",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "Svelte stores that remember previous values",
 	"main": "dist/index.js",
 	"module": "dist/index.es.js",
@@ -26,7 +26,7 @@
 		"memo"
 	],
 	"author": "Bryan Lee",
-	"license": "ISC",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/bryanmylee/svelte-previous/issues"
 	},
