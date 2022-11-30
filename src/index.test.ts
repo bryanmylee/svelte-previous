@@ -158,4 +158,19 @@ describe('equality', () => {
 		expect(get(current)).toBe(second);
 		expect(get(previous)).toBe(first);
 	});
+
+	it('updates if object values are different based on `isEqual`', () => {
+		// Arrange
+		const first = { name: 'sam', age: 12 };
+		const [current, previous] = withPrevious(first, {
+			isEqual: (a, b) => a.name === b.name && a.age === b.age,
+		});
+
+		// Act
+		current.update(($current) => ({ ...$current, age: 13 }));
+
+		// Assert
+		expect(get(current)).toEqual({ name: 'sam', age: 13 });
+		expect(get(previous)).toEqual({ name: 'sam', age: 12 });
+	});
 });
