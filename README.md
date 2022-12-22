@@ -5,7 +5,7 @@
 [![npm version](http://img.shields.io/npm/v/svelte-previous.svg)](https://www.npmjs.com/package/svelte-previous)
 [![npm downloads](https://img.shields.io/npm/dm/svelte-previous.svg)](https://www.npmjs.com/package/svelte-previous)
 ![license](https://img.shields.io/npm/l/svelte-previous)
-![build](https://img.shields.io/github/workflow/status/bryanmylee/svelte-previous/publish)
+![build](https://img.shields.io/github/actions/workflow/status/bryanmylee/svelte-previous/publish.yml)
 [![coverage](https://coveralls.io/repos/github/bryanmylee/svelte-previous/badge.svg?branch=master)](https://coveralls.io/github/bryanmylee/svelte-previous?branch=master)
 [![size](https://img.shields.io/bundlephobia/min/svelte-previous)](https://bundlephobia.com/result?p=svelte-previous)
 
