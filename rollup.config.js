@@ -7,6 +7,7 @@ const { declaration, declarationDir, ...compilerOptions } =
 	tsconfig.compilerOptions;
 
 export default {
+	external: ['svelte'],
 	input: 'src/index.ts',
 	output: [
 		{ format: 'cjs', file: pkg.main },
